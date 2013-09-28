@@ -2,6 +2,8 @@
 
 This is a fork of the original [Yard::Rails::Plugin](https://github.com/ogeidix/yard-rails-plugin) by [Ogeidix](https://github.com/ogeidix).  This guy takes the credit.
 
+Forked because I want a separate repo to hack on.  It may be better, it may be not.  It wasn't designed with public consumption in mind.
+
 Adds a couple of convenient things for documenting rails:
 
 * Routes
@@ -43,3 +45,4 @@ Pull requests here or with the original author, [Ogeidix](https://github.com/oge
 
 * A `@renders` tag for controllers
   * Showing HTTP status, content-type, template in docs
+* Get logic out of the view files, DRY them up a bit too
