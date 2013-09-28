@@ -1,8 +1,9 @@
 <% if object[:params] %>
+<% params = object[:params].uniq %>
 <div class="tags">
   <h3>Params:</h3>
   <ul class="params">
-    <% object[:params].each do |p| %>
+    <% params.each do |p| %>
 		<li>params[<%= link_object(p.gsub(':','').gsub("'",'').capitalize, p)%>]</li>
     <% end %>
   </ul>
