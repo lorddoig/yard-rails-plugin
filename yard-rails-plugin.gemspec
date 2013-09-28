@@ -2,10 +2,10 @@
 require File.expand_path('../lib/yard-rails-plugin/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["ogeidix"]
-  gem.email         = ["diegogiorgini@gmail.com"]
-  gem.summary       = "YARD plugin to document a Rails project" 
-  gem.homepage      = "https://github.com/ogeidix/yard-rails-plugin"
+  gem.authors       = ["ogeidix", "lorddoig"]
+  gem.email         = ["diegogiorgini@gmail.com", "hello@seandoig.com"]
+  gem.summary       = "YARD plugin which adds convenient things for documenting a Rails project" 
+  gem.homepage      = "https://github.com/lorddoig/yard-rails-plugin"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

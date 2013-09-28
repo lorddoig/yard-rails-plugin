@@ -17,16 +17,20 @@ module YARD
             else
               controller = ''
             end
-            { name: route.name.to_s, verb: route.verb.to_s, path: route.path,
+            { name: route.name.to_s, verb: stringify_verb_regex(route.verb), path: route.path.spec.to_s,
               controller: controller , action: reqs[:action], rack_app: rack_app, constraints: constraints}
           end
           @routes.reject! { |r| r[:path] =~ %r{/rails/info/properties|^/assets} }
         end
 
+        def stringify_verb_regex(verb)
+          verb.source.gsub(/(\^|\$)/, '')
+        end
+
         def generate_routes_description_file(filename)
           File.open(File.join(Dir.pwd, filename), 'w') do |f|
             f.puts "<h1>Routes</h1><br /><br />"
-            f.puts "<table><tr style='background: #EAF0FF; font-weight: bold; line-height: 28px; text-align: left'><th>&nbsp;&nbsp;Rails Method</th><th>&nbsp;&nbsp;Verb</th><th>&nbsp;&nbsp;Endpoint</th><th>&nbsp;&nbsp;Destionation</th></tr>"
+            f.puts "<table><tr style='background: #EAF0FF; font-weight: bold; line-height: 28px; text-align: left'><th>&nbsp;</th><th>&nbsp;&nbsp;Verb</th><th>&nbsp;&nbsp;Endpoint</th><th>&nbsp;&nbsp;Destionation</th></tr>"
             i = 0
             @routes.each do |r|
               odd_or_even = ((i % 2  == 0) ? 'even' : 'odd')  
