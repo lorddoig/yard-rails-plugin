@@ -1,44 +1,45 @@
-# Yard::Rails::Plugin
+# yard-rails-plugin
 
-This plugin for [Yard](http://http://yardoc.org) permits to generate the documentation about a [Rails](http://rubyonrails.org) project.
+This is a fork of the original [Yard::Rails::Plugin](https://github.com/ogeidix/yard-rails-plugin) by [Ogeidix](https://github.com/ogeidix).  This guy takes the credit.
 
-This means to handle in the correct way things such **models**, **controllers**, **routes** and so on.
+Adds a couple of convenient things for documenting rails:
 
-At now this plugin manages:
+* Routes
+  * Adds a `routes` entry to your Yard file list which enumerates your routes, mounted engines etc
+  * Adds route information to controller class and method documentation
 
-- Routes
-	- creates a summary file
-	- adds to each controller and action its routes
-- Controller Params
-	- adds to each action a list of params taken
-
-You are more than invited to contribute!
+* Controllers
+  * Adds params taken by each method to their documentation
 
 ## Installation
 
-For now this gem is available only through github so add this line to your application's Gemfile:
+In your gemfile
 
-    gem 'yard-rails-plugin', :git => 'https://github.com/ogeidix/yard-rails-plugin.git', :tag => 'v0.0.1'
+    gem 'yard-rails-plugin', '>= 0.1.0', github: 'lorddoig/yard-rails-plugin'
 
-Execute:
+Or for older versions of bundler
 
-    $ bundle
+    gem 'yard-rails-plugin', '>= 0.1.0', git: 'https://github.com/lorddoig/yard-rails-plugin.git'
 
-Then edit the file _.yardopts_ with
+Followed by a quick `bundle install`.
+
+Put this line in your `.yardopts` file
 
     "{lib,app}/**/*.rb" --plugin rails-plugin - tmp/routes.html
 
+Tested with Yard 0.8.3 and Ruby 2.0.0 - your mileage may vary.  Original gem was pretty broken on this set up.
+
 ## Usage
 
-Now you can execure yard doc with
+None!  The plugin will run when you run `yard doc`, `yard server` etc
 
-    bundle exec yard doc
-	
+**Note** that to get your routes it has to load Rails, so there's a longer than usual delay
 
-## Other useful yard plugins
+## Contribution
 
-To document a Rails project you can add other interesting plugins. I suggest you to checkout these:
+Pull requests here or with the original author, [Ogeidix](https://github.com/ogeidix) at [Yard::Rails::Plugin](https://github.com/ogeidix/yard-rails-plugin)
 
-  -	**Yard-Cucumber** [https://github.com/burtlo/yard-cucumber](https://github.com/burtlo/yard-cucumber)
-  - **Yard-Rspec** [https://github.com/ogeidix/yard-spec-plugin](https://github.com/ogeidix/yard-spec-plugin) (* this in **not** the official gem yard-rspec)
-  - **Yard-ActiveRecord** [https://github.com/theodorton/yard-activerecord](https://github.com/theodorton/yard-activerecord) 
+## TODO
+
+* A `@renders` tag for controllers
+  * Showing HTTP status, content-type, template in docs
