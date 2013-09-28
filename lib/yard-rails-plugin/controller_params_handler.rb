@@ -6,8 +6,11 @@ module YARD
         def process
           return unless owner.is_a?(YARD::CodeObjects::MethodObject)
           return unless owner.parent.is_a?(YARD::CodeObjects::ClassObject)
-          return unless owner.parent.name.to_s[/Controller/]
-          (owner[:params] ||= []) << statement.source.match(/params\[((:|')\w+'?)\]/)[1]
+          return unless owner.parent.to_s[/Controller/]
+          matches = statement.source.scan(/params\[((:|')\w+'?)\]/)
+          matches.each do |match|
+            (owner[:params] ||= []) << match.first
+          end
         end
       end
     end
