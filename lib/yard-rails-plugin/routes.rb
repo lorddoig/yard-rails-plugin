@@ -30,7 +30,7 @@ module YARD
         def generate_routes_description_file(filename)
           File.open(File.join(Dir.pwd, filename), 'w') do |f|
             f.puts "<h1>Routes</h1><br /><br />"
-            f.puts "<table><tr style='background: #EAF0FF; font-weight: bold; line-height: 28px; text-align: left'><th>&nbsp;&nbsp;Rails Method</th><th>&nbsp;&nbsp;Verb</th><th>&nbsp;&nbsp;Endpoint</th><th>&nbsp;&nbsp;Destionation</th></tr>"
+            f.puts "<table><tr style='background: #EAF0FF; font-weight: bold; line-height: 28px; text-align: left'><th>&nbsp;</th><th>&nbsp;&nbsp;Verb</th><th>&nbsp;&nbsp;Endpoint</th><th>&nbsp;&nbsp;Destionation</th></tr>"
             i = 0
             @routes.each do |r|
               odd_or_even = ((i % 2  == 0) ? 'even' : 'odd')  
