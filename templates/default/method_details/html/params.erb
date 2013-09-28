@@ -2,8 +2,8 @@
 <div class="tags">
   <h3>Params:</h3>
   <ul class="params">
-    <% for p in object[:params] %>
-		<li>params[<%= link_object(P(p.gsub(':','').gsub("'",'').capitalize), p )%>]</li>
+    <% object[:params].each do |p| %>
+		<li>params[<%= link_object(p.gsub(':','').gsub("'",'').capitalize, p)%>]</li>
     <% end %>
   </ul>
 </div>
