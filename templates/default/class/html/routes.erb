@@ -4,10 +4,11 @@
   <h2>Routes</h2>
   <ul class="routes method_details_list">
     <% routes.each do |r| %>
-		<li>[<%= r[:verb] %>] <%= r[:path].gsub(/(:|\*)\w+/) { |m| "<span style='font-family: monospace; color: green'>#{m}</span>"} %>
-			&raquo; <%= r[:rack_app] ? "<pre>#{r[:rack_app].inspect}</pre>" : link_object(P("#{r[:controller]}##{r[:action]}"), '#' + r[:action]) %>
-			 <%= (r[:name] && !r[:name].empty? ? "<span style='font-size: 85%'>(Helper name: #{r[:name]})</span>" : '') %>
-		</li>
+    <% action = r[:action].respond_to?(:source) ? r[:action].source : r[:action].to_s %>
+    <li>[<%= r[:verb] %>] <%= r[:path].gsub(/(:|\*)\w+/) { |m| "<span style='font-family: monospace; color: green'>#{m}</span>"} %>
+      &raquo; <%= r[:rack_app] ? "<pre>#{r[:rack_app].inspect}</pre>" : link_object(P("#{r[:controller]}##{action}"), '#' + action) %>
+       <%= (r[:name] && !r[:name].empty? ? "<span style='font-size: 85%'>(Helper name: #{r[:name]})</span>" : '') %>
+    </li>
     <% end %>
   </ul>
 </div>
