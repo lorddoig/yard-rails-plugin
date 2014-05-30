@@ -6,7 +6,7 @@ module YARD
           puts '[rails-plugin] Analyzing Routes...'
           ::Rails.application.reload_routes!
           all_routes = ::Rails.application.routes.routes
-          @routes = all_routes.collect do |route|            
+          @routes = all_routes.collect do |route|
             reqs = route.requirements.dup
             rack_app =  route.app.class.name.to_s =~ /^ActionDispatch::Routing/ ? nil : route.app.inspect
             constraints = reqs.except(:controller, :action).empty? ? '' : reqs.except(:controller, :action).inspect
@@ -30,14 +30,15 @@ module YARD
         def generate_routes_description_file(filename)
           File.open(File.join(Dir.pwd, filename), 'w') do |f|
             f.puts "<h1>Routes</h1><br /><br />"
-            f.puts "<table><tr style='background: #EAF0FF; font-weight: bold; line-height: 28px; text-align: left'><th>&nbsp;</th><th>&nbsp;&nbsp;Verb</th><th>&nbsp;&nbsp;Endpoint</th><th>&nbsp;&nbsp;Destionation</th></tr>"
+            f.puts "<table><tr style='background: #EAF0FF; font-weight: bold; line-height: 28px; text-align: left'><th>&nbsp;</th><th>&nbsp;&nbsp;Verb</th><th>&nbsp;&nbsp;Endpoint</th><th>&nbsp;&nbsp;Destination</th></tr>"
             i = 0
             @routes.each do |r|
-              odd_or_even = ((i % 2  == 0) ? 'even' : 'odd')  
+              odd_or_even = ((i % 2  == 0) ? 'even' : 'odd')
               if r[:rack_app]
                 destination = "<pre>#{r[:rack_app].inspect} #{r[:constraints]}</pre>"
               else
-                destination = "{#{r[:controller]} #{r[:controller]}}##{r[:action]}  #{r[:constraints]}"
+                action = normalized_action(r)
+                destination = "{#{r[:controller]} #{r[:controller]}}##{action} #{r[:constraints]}"
               end
               endpoint = r[:path].gsub(/(:|\*)\w+/) { |m| "<span style='font-family: monospace; color: green'>#{m}</span>"}
               f.puts "<tr class='#{odd_or_even}'><td>#{r[:name]}</td><td>#{r[:verb]}</td><td>#{endpoint}</td><td>#{destination}</td></tr>"
@@ -52,10 +53,19 @@ module YARD
             if r[:controller] && node = YARD::Registry.resolve(nil, r[:controller], true)
               (node[:routes] ||= []) << r
             end
-            if r[:controller] && r[:action] && node = YARD::Registry.resolve(nil, r[:controller]+'#'+r[:action], true)
+
+            action = normalized_action(r)
+            if r[:controller] && action && node = YARD::Registry.resolve(nil, r[:controller] + '#' + action, true)
               (node[:routes] ||= []) << r
             end
           end
+        end
+
+        private
+        # The action can be a RegExp
+        def normalized_action(route)
+          action = route[:action]
+          action.respond_to?(:source) ? action.source : action
         end
       end
     end
